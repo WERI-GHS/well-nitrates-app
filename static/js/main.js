@@ -370,6 +370,25 @@ const showStats = () => {
             name: 'Well Nitrate-N Levels'
         };
 
+        // y = mx + b ----> y = getStats.slope * x_dates_conv + getStats.intercept 
+
+        const linearTrendLine = {
+            x: x_dates_conv,
+            y: function () {
+                var calc_y = [];
+                calc_y.push(
+                    Number(getStats.slope) * x_dates_conv + Number(getStats.intercept)
+                );
+                console.log(Number(getStats.slope) + ", " + Number(getStats.intercept));
+                return calc_y;
+            },
+            mode: 'lines',
+            type: 'scatter',
+            name: 'Trend',
+        };
+
+
+
         // Plot features and layout
         const layout = {
             autosize: false,
@@ -404,7 +423,7 @@ const showStats = () => {
             }
         };
 
-        Plotly.newPlot('plot', [wnlTrace], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
+        Plotly.newPlot('plot', [wnlTrace, linearTrendLine], layout, {scrollZoom: true, displaylogo: false, responsive: true}, config);
 }
 
 // Filepath for map (lat, lon coords) json and data (stats, x-y vals) json 
